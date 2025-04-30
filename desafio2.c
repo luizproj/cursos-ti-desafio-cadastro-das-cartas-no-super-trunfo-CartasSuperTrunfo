@@ -1,0 +1,71 @@
+#include <stdio.h>
+#include <string.h>
+
+// Estrutura que representa uma carta do Super Trunfo
+struct Carta {
+    char estado[3];
+    char codigo[10];
+    char nomeCidade[50];
+    int populacao;
+    float area;
+    float pib;
+    int pontosTuristicos;
+    float densidadePopulacional;
+    float pibPerCapita;
+};
+
+// Função para calcular densidade populacional e PIB per capita
+void calcularIndicadores(struct Carta *carta) {
+    carta->densidadePopulacional = carta->populacao / carta->area;
+    carta->pibPerCapita = carta->pib / carta->populacao;
+}
+
+// Função para exibir os dados principais de uma carta
+void exibirCarta(struct Carta carta) {
+    printf("Cidade: %s (%s)\n", carta.nomeCidade, carta.estado);
+    printf("População: %d\n", carta.populacao);
+    printf("Área: %.2f km²\n", carta.area);
+    printf("PIB: %.2f bilhões\n", carta.pib);
+    printf("Pontos turísticos: %d\n", carta.pontosTuristicos);
+    printf("Densidade populacional: %.2f hab/km²\n", carta.densidadePopulacional);
+    printf("PIB per capita: %.2f\n\n", carta.pibPerCapita);
+}
+
+// Função para comparar as cartas com base em um atributo
+void compararCartas(struct Carta carta1, struct Carta carta2) {
+    // Atributo fixo escolhido: População
+    printf("Comparação de cartas (Atributo: População)\n\n");
+
+    printf("Carta 1 - %s (%s): %d habitantes\n", carta1.nomeCidade, carta1.estado, carta1.populacao);
+    printf("Carta 2 - %s (%s): %d habitantes\n", carta2.nomeCidade, carta2.estado, carta2.populacao);
+
+    if (carta1.populacao > carta2.populacao) {
+        printf("\nResultado: Carta 1 (%s) venceu!\n", carta1.nomeCidade);
+    } else if (carta2.populacao > carta1.populacao) {
+        printf("\nResultado: Carta 2 (%s) venceu!\n", carta2.nomeCidade);
+    } else {
+        printf("\nResultado: Empate!\n");
+    }
+}
+
+int main() {
+    // Declaração e preenchimento das cartas
+    struct Carta carta1 = {"SP", "C001", "São Paulo", 12300000, 1521.11, 800.5, 25};
+    struct Carta carta2 = {"RJ", "C002", "Rio de Janeiro", 6000000, 1182.30, 400.2, 18};
+
+    // Calcula indicadores para as duas cartas
+    calcularIndicadores(&carta1);
+    calcularIndicadores(&carta2);
+
+    // Exibe os dados das cartas
+    printf("=== Dados da Carta 1 ===\n");
+    exibirCarta(carta1);
+
+    printf("=== Dados da Carta 2 ===\n");
+    exibirCarta(carta2);
+
+    // Realiza a comparação
+    compararCartas(carta1, carta2);
+
+    return 0;
+}
